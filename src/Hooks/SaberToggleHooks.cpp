@@ -2,6 +2,8 @@
 #include "ModConfig.hpp"
 #include "Hooks.hpp"
 
+
+
 #include "GlobalNamespace/GameNoteController.hpp"
 #include "GlobalNamespace/NoteData.hpp"
 #include "GlobalNamespace/NoteVisualModifierType.hpp"
@@ -16,8 +18,12 @@ MAKE_AUTO_HOOK_MATCH(NoteController_Init, &NoteController::Init, void, NoteContr
 {
     NoteController_Init(self, noteData, worldRotation, moveStartPos, moveEndPos, jumpEndPos, moveDuration, jumpDuration, jumpGravity, endRotation, uniformScale, rotateTowardsPlayer, useRandomRotation);
     
-    if (self->noteData->colorType == ColorType::ColorA)
+    if (self->noteData->colorType == ColorType::ColorA && !getModConfig().LeftSaberToggle.GetValue())
     {
-        GameObject::Destroy(self->get_gameObject());
+        self->get_gameObject()->SetActive(false);
+    }
+    else if (self->noteData->colorType == ColorType::ColorB && !getModConfig().RightSaberToggle.GetValue())
+    {
+        self->get_gameObject()->SetActive(false);
     }
 }
