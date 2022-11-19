@@ -1,0 +1,51 @@
+{
+  "sharedDir": "shared",
+  "dependenciesDir": "extern",
+  "info": {
+    "name": "AccessAbility",
+    "id": "AccessAbility",
+    "version": "0.1.0",
+    "url": null,
+    "additionalData": {
+      "overrideSoName": "libAccessAbility.so"
+    }
+  },
+  "dependencies": [
+    {
+      "id": "modloader",
+      "versionRange": "=1.2.3",
+      "additionalData": {}
+    },
+    {
+      "id": "questui",
+      "versionRange": "=0.17.5",
+      "additionalData": {}
+    },
+    {
+      "id": "beatsaber-hook",
+      "versionRange": "=3.14.0",
+      "additionalData": {}
+    },
+    {
+      "id": "codegen",
+      "versionRange": "=0.28.0",
+      "additionalData": {}
+    },
+    {
+      "id": "config-utils",
+      "versionRange": "^0.8.0",
+      "additionalData": {}
+    },
+    {
+      "id": "custom-types",
+      "versionRange": "=0.15.21",
+      "additionalData": {}
+    },
+    {
+      "id": "bs-utils",
+      "versionRange": "^0.7.2",
+      "additionalData": {}
+    }
+  ],
+  "additionalData": {}
+}
