@@ -5,6 +5,8 @@
 #include "questui/shared/BeatSaberUI.hpp"
 using namespace QuestUI;
 
+using namespace UnityEngine;
+
 DEFINE_TYPE(AccessAbility::UI, AccessAbilityUI);
 
 void AccessAbility::UI::AccessAbilityUI::DidActivate(bool firstActivation)
@@ -12,6 +14,9 @@ void AccessAbility::UI::AccessAbilityUI::DidActivate(bool firstActivation)
     if (firstActivation)
     {
         auto container = BeatSaberUI::CreateVerticalLayoutGroup(get_transform());
+        container->set_childControlHeight(false);
+        container->set_childControlWidth(true);
+
         BeatSaberUI::CreateToggle(container->get_transform(), "Enabled", getModConfig().Enabled.GetValue(), [](bool value)
         {
             getModConfig().Enabled.SetValue(value);
