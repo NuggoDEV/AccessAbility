@@ -11,6 +11,7 @@
 using namespace GlobalNamespace;
 
 #include "questui/shared/BeatSaberUI.hpp"
+#include "questui/shared/QuestUI.hpp"
 using namespace QuestUI;
 
 #include "UnityEngine/UI/LayoutElement.hpp"
@@ -32,6 +33,9 @@ DEFINE_TYPE(AccessAbility::UI, AccessAbilityUI);
     fitter##identifier->set_verticalFit(ContentSizeFitter::FitMode::PreferredSize);         \
     fitter##identifier->set_horizontalFit(ContentSizeFitter::FitMode::PreferredSize)
 
+
+TMPro::TextMeshProUGUI *scoreSub;
+
 void AccessAbility::UI::AccessAbilityUI::DidActivate(bool firstActivation)
 {
     auto playerDataModal = UnityEngine::Object::FindObjectOfType<PlayerDataModel *>();
@@ -51,24 +55,47 @@ void AccessAbility::UI::AccessAbilityUI::DidActivate(bool firstActivation)
         });
 
 
-        BeatSaberUI::CreateToggle(container->get_transform(), "Left Saber Enabled", getModConfig().LeftSaberToggle.GetValue(), [](bool value)
+        BeatSaberUI::CreateToggle(container->get_transform(), "Disable Left Saber", getModConfig().LeftSaberToggle.GetValue(), [](bool value)
         {
             getModConfig().LeftSaberToggle.SetValue(value);
 
-            value ? bs_utils::Submission::enable(modInfo) : bs_utils::Submission::disable(modInfo);
+            value ? bs_utils::Submission::disable(modInfo) : bs_utils::Submission::enable(modInfo);
         });
 
-        BeatSaberUI::CreateToggle(container->get_transform(), "Right Saber Enabled", getModConfig().RightSaberToggle.GetValue(), [](bool value)
+        BeatSaberUI::CreateToggle(container->get_transform(), "Disable Right Saber", getModConfig().RightSaberToggle.GetValue(), [](bool value)
         {
             getModConfig().RightSaberToggle.SetValue(value);
 
-            value ? bs_utils::Submission::enable(modInfo) : bs_utils::Submission::disable(modInfo);
+            value ? bs_utils::Submission::disable(modInfo) : bs_utils::Submission::enable(modInfo);
         });
 
-        BeatSaberUI::CreateToggle(container->get_transform(), "", getModConfig().DisableWalls.GetValue(), [&](bool value)
+        auto sliderToggle = BeatSaberUI::CreateToggle(container->get_transform(), "Convert Sliders to Blocks", getModConfig().ConvertSliders.GetValue(), [&](bool value)
         {
-            playerData->gameplayModifiers->enabledObstacleType = value;
+            getModConfig().ConvertSliders.SetValue(value);
         });
+        BeatSaberUI::AddHoverHint(sliderToggle->get_gameObject(), "Converts sliders to normal blocks.");
 
+
+
+
+
+        scoreSub = BeatSaberUI::CreateText(container->get_transform(), "");
+        scoreSub->set_fontSize(4.0f);
+        scoreSub->set_alignment(TMPro::TextAlignmentOptions::Center);
+
+    }
+}
+
+void AccessAbility::UI::AccessAbilityUI::Update()
+{
+    if (getModConfig().LeftSaberToggle.GetValue() || getModConfig().RightSaberToggle.GetValue() || getModConfig().ConvertSliders.GetValue())
+    {
+        scoreSub->set_text("Score Submission:  Disabled");
+        scoreSub->set_color(Color::get_red());
+    }
+    else
+    {
+        scoreSub->set_text("Score Submission:  Enabled");
+        scoreSub->set_color(Color::get_green());
     }
 }
