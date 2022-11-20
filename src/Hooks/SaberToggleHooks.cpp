@@ -2,7 +2,8 @@
 #include "ModConfig.hpp"
 #include "Hooks.hpp"
 
-
+#include "GlobalNamespace/SliderController.hpp"
+#include "GlobalNamespace/SliderData.hpp"
 
 #include "GlobalNamespace/GameNoteController.hpp"
 #include "GlobalNamespace/NoteData.hpp"
@@ -18,12 +19,19 @@ MAKE_AUTO_HOOK_MATCH(NoteController_Init, &NoteController::Init, void, NoteContr
 {
     NoteController_Init(self, noteData, worldRotation, moveStartPos, moveEndPos, jumpEndPos, moveDuration, jumpDuration, jumpGravity, endRotation, uniformScale, rotateTowardsPlayer, useRandomRotation);
     
-    if (self->noteData->colorType == ColorType::ColorA && !getModConfig().LeftSaberToggle.GetValue())
+    auto noteColour = self->noteData->colorType;
+
+    if (noteColour == ColorType::ColorA && !getModConfig().LeftSaberToggle.GetValue() && getModConfig().Enabled.GetValue())
     {
         self->get_gameObject()->SetActive(false);
     }
-    else if (self->noteData->colorType == ColorType::ColorB && !getModConfig().RightSaberToggle.GetValue())
+    else if (noteColour == ColorType::ColorB && !getModConfig().RightSaberToggle.GetValue() && getModConfig().Enabled.GetValue())
     {
         self->get_gameObject()->SetActive(false);
     }
+}
+
+MAKE_AUTO_HOOK_MATCH(a, &SliderController::Init, void, SliderController *self, SliderController::LengthType lengthType, SliderData *sliderData, float worldRotation, Vector3 headNoteJumpStartPos, Vector3 tailNoteJumpStartPos, Vector3 headNoteJumpEndPos, Vector3 tailNoteJumpEndPos, float jumpDuration, float startNoteJumpGravity, float endNoteJumpGravity, float noteUniformScale)
+{
+    a(self, lengthType, sliderData, worldRotation, headNoteJumpStartPos, tailNoteJumpStartPos, headNoteJumpEndPos, tailNoteJumpEndPos, jumpDuration, startNoteJumpGravity, endNoteJumpGravity, noteUniformScale);
 }
