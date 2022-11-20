@@ -17,6 +17,5 @@ MAKE_AUTO_HOOK_MATCH(CSH_NoteController_Init, &NoteController::Init, void, NoteC
     if (getModConfig().ConvertSliders.GetValue())
     {
         noteData->ChangeToGameNote();
-        noteData->
     }
 }

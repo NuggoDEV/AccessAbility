@@ -4,8 +4,6 @@
 #include "ModConfig.hpp"
 #include "Hooks.hpp"
 
-DEFINE_CONFIG(ModConfig);
-
 static ModInfo modInfo; // Stores the ID and version of our mod, and is sent to the modloader upon startup
 
 // Loads the config from disk using our modInfo, then returns it for use
