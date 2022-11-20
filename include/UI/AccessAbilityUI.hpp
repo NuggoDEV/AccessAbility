@@ -8,4 +8,5 @@
 DECLARE_CLASS_CODEGEN(AccessAbility::UI, AccessAbilityUI, UnityEngine::MonoBehaviour,
 
     DECLARE_INSTANCE_METHOD(void, DidActivate, bool firstActivation);
+    DECLARE_INSTANCE_METHOD(void, Update);
 )
