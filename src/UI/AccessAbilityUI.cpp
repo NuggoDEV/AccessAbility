@@ -69,11 +69,11 @@ void AccessAbility::UI::AccessAbilityUI::DidActivate(bool firstActivation)
             value ? bs_utils::Submission::disable(modInfo) : bs_utils::Submission::enable(modInfo);
         });
 
-        auto sliderToggle = BeatSaberUI::CreateToggle(container->get_transform(), "Convert Sliders to Blocks", getModConfig().ConvertSliders.GetValue(), [&](bool value)
+        auto sliderToggle = BeatSaberUI::CreateToggle(container->get_transform(), "Remove Sliders", getModConfig().YeetSliders.GetValue(), [&](bool value)
         {
-            getModConfig().ConvertSliders.SetValue(value);
+            getModConfig().YeetSliders.SetValue(value);
         });
-        BeatSaberUI::AddHoverHint(sliderToggle->get_gameObject(), "Converts sliders to normal blocks.");
+        BeatSaberUI::AddHoverHint(sliderToggle->get_gameObject(), "Completely removes sliders from the map");
 
 
 
@@ -88,7 +88,7 @@ void AccessAbility::UI::AccessAbilityUI::DidActivate(bool firstActivation)
 
 void AccessAbility::UI::AccessAbilityUI::Update()
 {
-    if (getModConfig().LeftSaberToggle.GetValue() || getModConfig().RightSaberToggle.GetValue() || getModConfig().ConvertSliders.GetValue())
+    if (getModConfig().LeftSaberToggle.GetValue() || getModConfig().RightSaberToggle.GetValue() || getModConfig().YeetSliders.GetValue())
     {
         scoreSub->set_text("Score Submission:  Disabled");
         scoreSub->set_color(Color::get_red());

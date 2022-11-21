@@ -8,8 +8,5 @@ DECLARE_CONFIG(ModConfig,
     CONFIG_VALUE(RightSaberToggle, bool, "Right Saber Enabled", true);
     CONFIG_VALUE(DisableCrouch, bool, "Disable Crouch Walls", false);
     CONFIG_VALUE(DisableWalls, bool, "Disable Walls", false);
-    CONFIG_VALUE(ConvertSliders, bool, "Convert Sliders", false);
+    CONFIG_VALUE(YeetSliders, bool, "Removes Sliders", false);
 )
-// Gotta fix stuff now >:(
-
-// Nah just gonna downgrade Config-Utils for now lol
