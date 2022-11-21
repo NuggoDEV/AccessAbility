@@ -4,6 +4,9 @@
 
 #include "GlobalNamespace/GameNoteController.hpp"
 
+#include "GlobalNamespace/SliderController.hpp"
+#include "GlobalNamespace/SliderData.hpp"
+
 #include "GlobalNamespace/NoteData.hpp"
 #include "GlobalNamespace/NoteVisualModifierType.hpp"
 using namespace GlobalNamespace;
@@ -14,8 +17,18 @@ MAKE_AUTO_HOOK_MATCH(CSH_NoteController_Init, &NoteController::Init, void, NoteC
 {
     CSH_NoteController_Init(self, noteData, worldRotation, moveStartPos, moveEndPos, jumpEndPos, moveDuration, jumpDuration, jumpGravity, endRotation, uniformScale, rotateTowardsPlayer, useRandomRotation);
 
-    if (getModConfig().ConvertSliders.GetValue())
+    if (getModConfig().YeetSliders.GetValue())
     {
-        noteData->ChangeToGameNote();
+        self->get_gameObject()->SetActive(false);
+    }
+}
+
+MAKE_AUTO_HOOK_MATCH(a, &SliderController::Init, void, SliderController *self, SliderController::LengthType lengthType, SliderData *sliderData, float worldRotation, Vector3 headNoteJumpStartPos, Vector3 tailNoteJumpStartPos, Vector3 headNoteJumpEndPos, Vector3 tailNoteJumpEndPos, float jumpDuration, float startNoteJumpGravity, float endNoteJumpGravity, float noteUniformScale)
+{
+    a(self, lengthType, sliderData, worldRotation, headNoteJumpStartPos, tailNoteJumpStartPos, headNoteJumpEndPos, tailNoteJumpEndPos, jumpDuration, startNoteJumpGravity, endNoteJumpGravity, noteUniformScale);
+
+    if (getModConfig().YeetSliders.GetValue())
+    {
+        //self->get_gameObject()->SetActive(false);
     }
 }
