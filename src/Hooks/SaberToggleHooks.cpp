@@ -18,17 +18,12 @@ MAKE_AUTO_HOOK_MATCH(STH_NoteController_Init, &NoteController::Init, void, NoteC
     
     auto noteColour = self->noteData->colorType;
 
-    if (noteColour == ColorType::ColorA && !getModConfig().LeftSaberToggle.GetValue() && getModConfig().Enabled.GetValue())
+    if (noteColour == ColorType::ColorA && getModConfig().LeftSaberToggle.GetValue() && getModConfig().Enabled.GetValue())
     {
         self->get_gameObject()->SetActive(false);
     }
-    else if (noteColour == ColorType::ColorB && !getModConfig().RightSaberToggle.GetValue() && getModConfig().Enabled.GetValue())
+    else if (noteColour == ColorType::ColorB && getModConfig().RightSaberToggle.GetValue() && getModConfig().Enabled.GetValue())
     {
         self->get_gameObject()->SetActive(false);
     }
 }
-
-//MAKE_AUTO_HOOK_MATCH(a, &SliderController::Init, void, SliderController *self, SliderController::LengthType lengthType, SliderData *sliderData, float worldRotation, Vector3 headNoteJumpStartPos, Vector3 tailNoteJumpStartPos, Vector3 headNoteJumpEndPos, Vector3 tailNoteJumpEndPos, float jumpDuration, float startNoteJumpGravity, float endNoteJumpGravity, float noteUniformScale)
-//{
-//    a(self, lengthType, sliderData, worldRotation, headNoteJumpStartPos, tailNoteJumpStartPos, headNoteJumpEndPos, tailNoteJumpEndPos, jumpDuration, startNoteJumpGravity, endNoteJumpGravity, noteUniformScale);
-//}
