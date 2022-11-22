@@ -75,9 +75,9 @@ void AccessAbility::UI::AccessAbilityUI::DidActivate(bool firstActivation)
         });
         BeatSaberUI::AddHoverHint(sliderToggle->get_gameObject(), "Completely removes sliders from the map");
 
-        auto crouchWalls = BeatSaberUI::CreateToggle(container->get_transform(), "Disable Crouch Walls", getModConfig().NiceWalls.GetValue(), [&](bool value)
+        auto crouchWalls = BeatSaberUI::CreateToggle(container->get_transform(), "Disable Crouch Walls", getModConfig().DisableCrouch.GetValue(), [&](bool value)
         {
-
+            getModConfig().DisableCrouch.SetValue(value);
         });
         BeatSaberUI::AddHoverHint(crouchWalls->get_gameObject(), "Disables walls that require you to crouch.");
 

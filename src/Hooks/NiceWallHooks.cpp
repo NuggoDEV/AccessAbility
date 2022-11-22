@@ -31,3 +31,4 @@ MAKE_AUTO_HOOK_MATCH(abc, &GameEnergyCounter::ProcessEnergyChange, void, GameEne
 {
     abc(self, energyChange);
 }
+

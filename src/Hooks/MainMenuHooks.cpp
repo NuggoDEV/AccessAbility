@@ -12,11 +12,11 @@ using namespace GlobalNamespace;
 MAKE_AUTO_HOOK_MATCH(MainMenuViewController_DidActivate, &MainMenuViewController::DidActivate, void, MainMenuViewController *self, bool firstActivation, bool addedToHierarchy, bool screenSystemEnabling)
 {
     MainMenuViewController_DidActivate(self, firstActivation, addedToHierarchy, screenSystemEnabling);
-    if (!getModConfig().LeftSaberToggle.GetValue() || !getModConfig().RightSaberToggle.GetValue())
+    if (getModConfig().Enabled.GetValue() && getModConfig().LeftSaberToggle.GetValue() || getModConfig().RightSaberToggle.GetValue())
     {
         bs_utils::Submission::disable(modInfo);
     }
-    else if (getModConfig().LeftSaberToggle.GetValue() || getModConfig().RightSaberToggle.GetValue())
+    else
     {
         bs_utils::Submission::enable(modInfo);
     }
