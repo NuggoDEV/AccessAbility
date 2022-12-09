@@ -49,41 +49,25 @@ void AccessAbility::UI::AccessAbilityUI::DidActivate(bool firstActivation)
         container->set_spacing(1.0f);
         SetPreferredSize(container, 70.0f, 60.0f);
 
-        BeatSaberUI::CreateToggle(container->get_transform(), "Enabled", getModConfig().Enabled.GetValue(), [](bool value)
-        {
-            getModConfig().Enabled.SetValue(value);
-        });
+        auto enable = BeatSaberUI::CreateToggle(container->get_transform(), "Enabled", getModConfig().Enabled.GetValue(), [](bool value)
+        {   getModConfig().Enabled.SetValue(value);    });
+        BeatSaberUI::AddHoverHint(enable->get_gameObject(), "Enables or disables the mod.");
 
+        auto leftSaber = BeatSaberUI::CreateToggle(container->get_transform(), "Disable Left Saber", getModConfig().LeftSaberToggle.GetValue(), [](bool value)
+        {   getModConfig().LeftSaberToggle.SetValue(value);    });
+        BeatSaberUI::AddHoverHint(leftSaber->get_gameObject(), "Removes all notes that use the left saber.");
 
-        BeatSaberUI::CreateToggle(container->get_transform(), "Disable Left Saber", getModConfig().LeftSaberToggle.GetValue(), [](bool value)
-        {
-            getModConfig().LeftSaberToggle.SetValue(value);
+        auto rightSaber = BeatSaberUI::CreateToggle(container->get_transform(), "Disable Right Saber", getModConfig().RightSaberToggle.GetValue(), [](bool value)
+        {   getModConfig().RightSaberToggle.SetValue(value);    });
+        BeatSaberUI::AddHoverHint(rightSaber->get_gameObject(), "Removes all notes that use the right saber.");
 
-            value ? bs_utils::Submission::disable(modInfo) : bs_utils::Submission::enable(modInfo);
-        });
+        auto crouchWalls = BeatSaberUI::CreateToggle(container->get_transform(), "Yeet Crouch Walls", getModConfig().YeetCrouchWalls.GetValue(), [&](bool value)
+        {   getModConfig().YeetCrouchWalls.SetValue(value);   });
+        BeatSaberUI::AddHoverHint(crouchWalls->get_gameObject(), "Yeets walls that require you to crouch.");
 
-        BeatSaberUI::CreateToggle(container->get_transform(), "Disable Right Saber", getModConfig().RightSaberToggle.GetValue(), [](bool value)
-        {
-            getModConfig().RightSaberToggle.SetValue(value);
-
-            value ? bs_utils::Submission::disable(modInfo) : bs_utils::Submission::enable(modInfo);
-        });
-
-        auto sliderToggle = BeatSaberUI::CreateToggle(container->get_transform(), "Remove Sliders", getModConfig().YeetSliders.GetValue(), [&](bool value)
-        {
-            getModConfig().YeetSliders.SetValue(value);
-        });
-        BeatSaberUI::AddHoverHint(sliderToggle->get_gameObject(), "Completely removes sliders from the map");
-
-        auto crouchWalls = BeatSaberUI::CreateToggle(container->get_transform(), "Disable Crouch Walls", getModConfig().DisableCrouch.GetValue(), [&](bool value)
-        {
-            getModConfig().DisableCrouch.SetValue(value);
-        });
-        BeatSaberUI::AddHoverHint(crouchWalls->get_gameObject(), "Disables walls that require you to crouch.");
-
-
-
-
+        auto bombs = BeatSaberUI::CreateToggle(container->get_transform(), "Yeet Bombs", getModConfig().YeetBombs.GetValue(), [](bool value)
+        {   getModConfig().YeetBombs.SetValue(value);   });
+        BeatSaberUI::AddHoverHint(bombs->get_gameObject(), "Yeets all bombs because who likes them.");
 
         scoreSub = BeatSaberUI::CreateText(container->get_transform(), "");
         scoreSub->set_fontSize(4.0f);
@@ -94,14 +78,25 @@ void AccessAbility::UI::AccessAbilityUI::DidActivate(bool firstActivation)
 
 void AccessAbility::UI::AccessAbilityUI::Update()
 {
-    if (getModConfig().LeftSaberToggle.GetValue() || getModConfig().RightSaberToggle.GetValue() || getModConfig().YeetSliders.GetValue())
+
+    if (!getModConfig().Enabled.GetValue())
+        bs_utils::Submission::enable(modInfo);
+    else if (getModConfig().Enabled.GetValue() and getModConfig().LeftSaberToggle.GetValue() or getModConfig().RightSaberToggle.GetValue() or getModConfig().YeetCrouchWalls.GetValue() or getModConfig().YeetBombs.GetValue())
     {
-        scoreSub->set_text("Score Submission:  Disabled");
+        bs_utils::Submission::disable(modInfo);
+    }
+    else if (getModConfig().Enabled.GetValue())
+        bs_utils::Submission::enable(modInfo);
+
+
+    if (bs_utils::Submission::getEnabled() == false)
+    {
+        scoreSub->set_text("Score Submission: Disabled");
         scoreSub->set_color(Color::get_red());
     }
     else
     {
-        scoreSub->set_text("Score Submission:  Enabled");
+        scoreSub->set_text("Score Submission: Enabled");
         scoreSub->set_color(Color::get_green());
     }
 }
