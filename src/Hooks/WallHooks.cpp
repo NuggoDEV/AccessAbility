@@ -27,22 +27,39 @@ MAKE_AUTO_HOOK_MATCH(ObstacleController_Init, &ObstacleController::Init, void, O
 
 }
 
+MAKE_AUTO_HOOK_MATCH(ObstacleController_Update, &ObstacleController::Update, void, ObstacleController *self)
+{
+    // Calculate the dimensions of the obstacle
+    int width = (int)(self->singleLineWidth / self->height);
+    int height = (int)(self->singleLineWidth / self->height);
+
+    // Check if the obstacle uses the top two spaces of a 4x3 grid
+    if (width == 4 && height == 2) {
+        // The obstacle uses the top two spaces of a 4x3 grid
+    } else {
+        // The obstacle does not use the top two spaces of a 4x3 grid
+    }
+
+    // Call the original Update function
+    ObstacleController_Update(self);
+}
+
 //bool hasActivated = false;
 
-MAKE_AUTO_HOOK_MATCH(ObstacleController_Update, &ObstacleController::ManualUpdate, void, ObstacleController *self)
-{
-    ObstacleController_Update(self);
-
-    NoteLineLayer *b;
-    ObstacleData *obstacleLayer;
-
-    if (obstacleLayer->get_lineLayer() == 0 && getModConfig().DisableCrouch.GetValue() /*&& !hasActivated*/)
-    {
-        //Object::Destroy(self);
-        self->get_gameObject()->SetActive(false);
-    }
-    else
-    {
-        self->get_gameObject()->SetActive(true);
-    }
-}
+//MAKE_AUTO_HOOK_MATCH(ObstacleController_Update, &ObstacleController::ManualUpdate, void, ObstacleController *self)
+//{
+//    ObstacleController_Update(self);
+//
+//    NoteLineLayer *b;
+//    ObstacleData *obstacleLayer;
+//
+//    if (obstacleLayer->get_lineLayer() == 0 && getModConfig().DisableCrouch.GetValue() /*&& !hasActivated*/)
+//    {
+//        //Object::Destroy(self);
+//        self->get_gameObject()->SetActive(false);
+//    }
+//    else
+//    {
+//        self->get_gameObject()->SetActive(true);
+//    }
+//}
