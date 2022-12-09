@@ -2,6 +2,10 @@
 #include "ModConfig.hpp"
 #include "Hooks.hpp"
 
+#include "GlobalNamespace/BeatmapDataObstaclesAndBombsTransform.hpp"
+#include "GlobalNamespace/BeatmapDataItem.hpp"
+#include "GlobalNamespace/GameplayModifiers.hpp"
+
 #include "GlobalNamespace/ObstacleController.hpp"
 #include "GlobalNamespace/ObstacleData.hpp"
 #include "GlobalNamespace/NoteLineLayer.hpp"
@@ -9,57 +13,64 @@ using namespace GlobalNamespace;
 
 using namespace UnityEngine;
 
-MAKE_AUTO_HOOK_MATCH(ObstacleController_Init, &ObstacleController::Init, void, ObstacleController *self, ObstacleData *obstacleData, float worldRotation, Vector3 startPos, Vector3 midPos, Vector3 endPos, float moveDuration1, float moveDuration2, float singleLineWidth, float height)
+ObstacleData obstacleData;
+
+
+MAKE_AUTO_HOOK_MATCH(BDOABT_ShouldUseBeatmapDataItem, &BeatmapDataObstaclesAndBombsTransform::ShouldUseBeatmapDataItem, bool, BeatmapDataItem *beatmapDataItem, GameplayModifiers::EnabledObstacleType enabledObstaclesType, bool noBombs)
 {
-    ObstacleController_Init(self, obstacleData, worldRotation, startPos, midPos, endPos, moveDuration1, moveDuration2, singleLineWidth, height);
+    BDOABT_ShouldUseBeatmapDataItem(beatmapDataItem, enabledObstaclesType, noBombs);
 
-    //NoteLineLayer *b;
-//
-    //if (b->Base && getModConfig().DisableCrouch.GetValue())
-    //{
-    //    //Object::Destroy(self);
-    //    self->get_gameObject()->SetActive(false);
-    //}
-    //else
-    //{
-    //    self->get_gameObject()->SetActive(true);
-    //}
-
-}
-
-MAKE_AUTO_HOOK_MATCH(ObstacleController_Update, &ObstacleController::Update, void, ObstacleController *self)
-{
-    // Calculate the dimensions of the obstacle
-    int width = (int)(self->singleLineWidth / self->height);
-    int height = (int)(self->singleLineWidth / self->height);
-
-    // Check if the obstacle uses the top two spaces of a 4x3 grid
-    if (width == 4 && height == 2) {
-        // The obstacle uses the top two spaces of a 4x3 grid
-    } else {
-        // The obstacle does not use the top two spaces of a 4x3 grid
+    if (obstacleData.height != 2)
+    {
+        getLogger().info("Height isn't equal to 3");
+        return false;
+    }
+    else
+    {
+        return true;
     }
 
-    // Call the original Update function
-    ObstacleController_Update(self);
+    return obstacleData.height;
 }
 
-//bool hasActivated = false;
 
-//MAKE_AUTO_HOOK_MATCH(ObstacleController_Update, &ObstacleController::ManualUpdate, void, ObstacleController *self)
+//MAKE_AUTO_HOOK_MATCH(fjglv, &ObstacleController::Update, void, ObstacleController *self)
 //{
-//    ObstacleController_Update(self);
+//    fjglv(self);
 //
-//    NoteLineLayer *b;
-//    ObstacleData *obstacleLayer;
-//
-//    if (obstacleLayer->get_lineLayer() == 0 && getModConfig().DisableCrouch.GetValue() /*&& !hasActivated*/)
+//    if (obstacleData.height != 2)
 //    {
-//        //Object::Destroy(self);
-//        self->get_gameObject()->SetActive(false);
+//        getLogger().info("Height isn't equal to 3");
+//        self->set_enabled(true);
+//
+//        Object::Destroy(self->get);
+//        obstacleData.
+//    }
+//}
+
+MAKE_AUTO_HOOK_MATCH(avcsdf, &ObstacleController::Init, void, ObstacleController *self, ObstacleData *obstacleData, float worldRotation, Vector3 startPos, Vector3 midPos, Vector3 endPos, float move1Duration, float move2Duration, float singleLineWidth, float height)
+{
+    avcsdf(self, obstacleData, worldRotation, startPos, midPos, endPos, move1Duration, move2Duration, singleLineWidth, height);
+
+    if (getModConfig().Enabled.GetValue() && getModConfig().DisableCrouch.GetValue() && obstacleData->lineLayer != 0)
+    {
+        self->get_gameObject()->SetActive(false);
+    }
+}
+
+//class a
+//{
+//    
+//    
+//    if (NoteLineLayer::Base)
+//    {
+//        getLogger().info("Enabled Walls");
+//        self->set_enabled(true);
 //    }
 //    else
 //    {
-//        self->get_gameObject()->SetActive(true);
+//        getLogger().info("Disabled Walls");
+//        self->set_enabled(false);
 //    }
+//    a(self);
 //}
