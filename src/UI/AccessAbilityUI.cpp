@@ -40,14 +40,18 @@ void AccessAbility::UI::AccessAbilityUI::DidActivate(bool firstActivation)
 {
     auto playerDataModal = UnityEngine::Object::FindObjectOfType<PlayerDataModel *>();
     auto playerData = playerDataModal->playerData;
-
+    
     if (firstActivation)
     {
+        
+
         auto container = BeatSaberUI::CreateVerticalLayoutGroup(get_transform());
         container->get_rectTransform()->set_anchoredPosition({0, 0});
         container->set_padding(RectOffset::New_ctor(2, 2, 2, 2));
         container->set_spacing(1.0f);
         SetPreferredSize(container, 70.0f, 60.0f);
+
+        
 
         auto enable = BeatSaberUI::CreateToggle(container->get_transform(), "Enabled", getModConfig().Enabled.GetValue(), [](bool value)
         {   getModConfig().Enabled.SetValue(value);    });
@@ -80,13 +84,13 @@ void AccessAbility::UI::AccessAbilityUI::Update()
 {
 
     if (!getModConfig().Enabled.GetValue())
-        bs_utils::Submission::enable(modInfo);
+        bs_utils::Submission::enable(ModInf());
     else if (getModConfig().Enabled.GetValue() and getModConfig().LeftSaberToggle.GetValue() or getModConfig().RightSaberToggle.GetValue() or getModConfig().YeetCrouchWalls.GetValue() or getModConfig().YeetBombs.GetValue())
     {
-        bs_utils::Submission::disable(modInfo);
+        bs_utils::Submission::disable(ModInf());
     }
     else if (getModConfig().Enabled.GetValue())
-        bs_utils::Submission::enable(modInfo);
+        bs_utils::Submission::enable(ModInf());
 
 
     if (bs_utils::Submission::getEnabled() == false)
