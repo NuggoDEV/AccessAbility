@@ -1,8 +1,11 @@
 #include "main.hpp"
 #include "ModConfig.hpp"
 #include "UI/AccessAbilityUI.hpp"
+using namespace AccessAbility::UI;
 
 #include "bs-utils/shared/utils.hpp"
+
+#include "GlobalNamespace/PlayerDataFileManagerSO.hpp"
 
 #include "GlobalNamespace/PlayerDataModel.hpp"
 #include "GlobalNamespace/PlayerData.hpp"
@@ -23,6 +26,7 @@ static ModInfo modInfo;
 
 DEFINE_TYPE(AccessAbility::UI, AccessAbilityUI);
 
+// Taken from Speecil's mod, Pause Remapper: https://github.com/speecil/PauseRemapper/blob/main/src/UI/GameplaySettingsView.cpp#L25
 #define SetPreferredSize(identifier, width, height)                                         \
     auto layout##identifier = identifier->get_gameObject()->GetComponent<LayoutElement*>(); \
     if (!layout##identifier)                                                                \
@@ -36,11 +40,15 @@ DEFINE_TYPE(AccessAbility::UI, AccessAbilityUI);
 
 TMPro::TextMeshProUGUI *scoreSub;
 
-void AccessAbility::UI::AccessAbilityUI::DidActivate(bool firstActivation)
+void AccessAbilityUI::DidActivate(bool firstActivation)
 {
     auto playerDataModal = UnityEngine::Object::FindObjectOfType<PlayerDataModel *>();
     auto playerData = playerDataModal->playerData;
-    
+    auto playerHeight = playerData->playerSpecificSettings;
+
+    if (playerHeight->automaticPlayerHeight == true)
+        playerHeight->automaticPlayerHeight = false;
+
     if (firstActivation)
     {
         
@@ -73,6 +81,25 @@ void AccessAbility::UI::AccessAbilityUI::DidActivate(bool firstActivation)
         {   getModConfig().YeetBombs.SetValue(value);   });
         BeatSaberUI::AddHoverHint(bombs->get_gameObject(), "Yeets all bombs because who likes them.");
 
+        auto cripple = BeatSaberUI::CreateToggle(container->get_transform(), "Cripple Mode", getModConfig().CrippleMode.GetValue(), [playerHeight](bool value)
+        {
+
+
+
+            if (value == true)
+            {
+                getModConfig().HeightPreCrippleMode.SetValue(playerHeight->get_playerHeight());
+                
+                playerHeight->playerHeight = 1.3f;
+                getModConfig().CrippleMode.SetValue(value);
+            }
+            else
+            {
+                playerHeight->playerHeight = getModConfig().HeightPreCrippleMode.GetValue();
+            }
+        });
+        BeatSaberUI::AddHoverHint(cripple->get_gameObject(), "Disables automatic player height and sets player height to 1.3m. Also recommended to change Y axis in room settings to something in the minus range.");
+
         scoreSub = BeatSaberUI::CreateText(container->get_transform(), "");
         scoreSub->set_fontSize(4.0f);
         scoreSub->set_alignment(TMPro::TextAlignmentOptions::Center);
@@ -80,18 +107,19 @@ void AccessAbility::UI::AccessAbilityUI::DidActivate(bool firstActivation)
     }
 }
 
-void AccessAbility::UI::AccessAbilityUI::Update()
+void AccessAbilityUI::Update()
 {
-
-    if (!getModConfig().Enabled.GetValue())
-        bs_utils::Submission::enable(ModInf());
-    else if (getModConfig().Enabled.GetValue() and getModConfig().LeftSaberToggle.GetValue() or getModConfig().RightSaberToggle.GetValue() or getModConfig().YeetCrouchWalls.GetValue() or getModConfig().YeetBombs.GetValue())
+    if (bs_utils::Submission::getEnabled() == true)
     {
-        bs_utils::Submission::disable(ModInf());
+        if (!getModConfig().Enabled.GetValue())
+            bs_utils::Submission::enable(ModInf());
+        else if (getModConfig().Enabled.GetValue() and getModConfig().LeftSaberToggle.GetValue() or getModConfig().RightSaberToggle.GetValue() or getModConfig().YeetCrouchWalls.GetValue() or getModConfig().YeetBombs.GetValue())
+        {
+            bs_utils::Submission::disable(ModInf());
+        }
+        else if (getModConfig().Enabled.GetValue())
+            bs_utils::Submission::enable(ModInf());
     }
-    else if (getModConfig().Enabled.GetValue())
-        bs_utils::Submission::enable(ModInf());
-
 
     if (bs_utils::Submission::getEnabled() == false)
     {
