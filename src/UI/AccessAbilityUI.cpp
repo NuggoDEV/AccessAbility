@@ -96,6 +96,7 @@ void AccessAbilityUI::DidActivate(bool firstActivation)
             else
             {
                 playerHeight->playerHeight = getModConfig().HeightPreCrippleMode.GetValue();
+                getModConfig().CrippleMode.SetValue(value);
             }
         });
         BeatSaberUI::AddHoverHint(cripple->get_gameObject(), "Disables automatic player height and sets player height to 1.3m. Also recommended to change Y axis in room settings to something in the minus range.");
