@@ -46,8 +46,7 @@ void AccessAbilityUI::DidActivate(bool firstActivation)
     auto playerData = playerDataModal->playerData;
     auto playerHeight = playerData->playerSpecificSettings;
 
-    if (playerHeight->automaticPlayerHeight == true)
-        playerHeight->automaticPlayerHeight = false;
+
 
     if (firstActivation)
     {
@@ -81,22 +80,23 @@ void AccessAbilityUI::DidActivate(bool firstActivation)
         {   getModConfig().YeetBombs.SetValue(value);   });
         BeatSaberUI::AddHoverHint(bombs->get_gameObject(), "Yeets all bombs because who likes them.");
 
-        auto cripple = BeatSaberUI::CreateToggle(container->get_transform(), "Cripple Mode", getModConfig().CrippleMode.GetValue(), [playerHeight](bool value)
+        auto cripple = BeatSaberUI::CreateToggle(container->get_transform(), "Seated Mode", getModConfig().SeatedMode.GetValue(), [playerHeight](bool value)
         {
 
-
+            if (playerHeight->automaticPlayerHeight == true)
+                playerHeight->automaticPlayerHeight = false;
 
             if (value == true)
             {
-                getModConfig().HeightPreCrippleMode.SetValue(playerHeight->get_playerHeight());
+                getModConfig().HeightPreSeatedMode.SetValue(playerHeight->get_playerHeight());
                 
                 playerHeight->playerHeight = 1.3f;
-                getModConfig().CrippleMode.SetValue(value);
+                getModConfig().SeatedMode.SetValue(value);
             }
             else
             {
-                playerHeight->playerHeight = getModConfig().HeightPreCrippleMode.GetValue();
-                getModConfig().CrippleMode.SetValue(value);
+                playerHeight->playerHeight = getModConfig().HeightPreSeatedMode.GetValue();
+                getModConfig().SeatedMode.SetValue(value);
             }
         });
         BeatSaberUI::AddHoverHint(cripple->get_gameObject(), "Disables automatic player height and sets player height to 1.3m. Also recommended to change Y axis in room settings to something in the minus range.");
@@ -114,7 +114,7 @@ void AccessAbilityUI::Update()
     {
         if (!getModConfig().Enabled.GetValue())
             bs_utils::Submission::enable(ModInf());
-        else if (getModConfig().Enabled.GetValue() and getModConfig().LeftSaberToggle.GetValue() or getModConfig().RightSaberToggle.GetValue() or getModConfig().YeetCrouchWalls.GetValue() or getModConfig().YeetBombs.GetValue())
+        else if (getModConfig().LeftSaberToggle.GetValue() or getModConfig().RightSaberToggle.GetValue() or getModConfig().YeetCrouchWalls.GetValue() or getModConfig().YeetBombs.GetValue())
         {
             bs_utils::Submission::disable(ModInf());
         }

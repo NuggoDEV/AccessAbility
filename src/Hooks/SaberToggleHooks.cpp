@@ -22,6 +22,7 @@
 #include "GlobalNamespace/BeatmapObjectSpawnMovementData.hpp"
 
 #include "GlobalNamespace/BeatLine.hpp"
+#include "GlobalNamespace/BeatmapDataItem.hpp"
 using namespace GlobalNamespace;
 
 using namespace UnityEngine;
@@ -41,6 +42,7 @@ MAKE_AUTO_HOOK_MATCH(NoteController_Init, &NoteController::Init, void, NoteContr
 
         self->Dissolve(0.001f);
         self->NoteDidStartDissolving();
+        self->SendNoteWasMissedEvent();
         //self->DissolveCoroutine(0.001f);
         //self->get_gameObject()->SetActive(false);
         //Object::Destroy(self);
@@ -49,11 +51,19 @@ MAKE_AUTO_HOOK_MATCH(NoteController_Init, &NoteController::Init, void, NoteContr
     {
         self->Dissolve(0.001f);
         self->NoteDidStartDissolving();
+        self->SendNoteWasMissedEvent();
         //self->DissolveCoroutine(0.001f);
         //self->get_gameObject()->SetActive(false);
         //Object::Destroy(self);
     }
 }
+
+
+
+
+
+
+
 
 
 // Don't work sadge
