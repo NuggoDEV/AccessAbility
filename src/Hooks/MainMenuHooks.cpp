@@ -12,12 +12,12 @@ MAKE_AUTO_HOOK_MATCH(MainMenuViewController_DidActivate, &MainMenuViewController
 {
     MainMenuViewController_DidActivate(self, firstActivation, addedToHierarchy, screenSystemEnabling);
 
-    if (!getModConfig().Enabled.GetValue())
+    if (!getModConfig().ModToggle.GetValue())
         bs_utils::Submission::enable(ModInf());
-    else if (getModConfig().Enabled.GetValue() and getModConfig().LeftSaberToggle.GetValue() or getModConfig().RightSaberToggle.GetValue() or getModConfig().YeetCrouchWalls.GetValue() or getModConfig().YeetBombs.GetValue())
+    else if (getModConfig().ModToggle.GetValue() and getModConfig().LeftSaberToggle.GetValue() or getModConfig().RightSaberToggle.GetValue() or getModConfig().YeetCrouchWalls.GetValue() or getModConfig().YeetBombs.GetValue())
     {
         bs_utils::Submission::disable(ModInf());
     }
-    else if (getModConfig().Enabled.GetValue())
+    else if (getModConfig().ModToggle.GetValue())
         bs_utils::Submission::enable(ModInf());
 }

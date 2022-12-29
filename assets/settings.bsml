@@ -1,0 +1,17 @@
+<bg id='root' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='https://raw.githubusercontent.com/RedBrumbler/Quest-BSML-Docs/gh-pages/schema.xsd'>
+    <tab-selector tab-tag='tabs'/>
+
+    <vertical preferred-width="95" preferred-height="58">
+        <toggle-setting value="ModToggle" text="Enable AccessAbility" apply-on-change="true" hover-hint="Enables/ Disables AccessAbility"/>
+        <horizontal>
+            <toggle-setting value="LeftSaberToggle" text="Left Saber Toggle" apply-on-change="true"/>
+            <toggle-setting value="RightSaberToggle" text="Right Saber Toggle" apply-on-change="true"/>
+        </horizontal>
+        <toggle-setting value="YeetCrouchWalls" text="Yeet Crouch Walls" apply-on-change="true" />
+        <toggle-setting value="YeetBombs" text="Yeet Bombs" apply-on-change="true" />
+        <toggle-setting value="SeatedMode" text="Seated Mode" apply-on-change="true" />
+
+        <text id="ScoreSubText" text="Score Submission: " color="green" active="true" hover-hint="Actually make it work later "/>
+        <clickable-text/>
+    </vertical>
+</bg>
