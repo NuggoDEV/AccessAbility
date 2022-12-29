@@ -31,8 +31,6 @@ SliderMeshController sliderMeshController;
 SliderController sliderController;
 SliderData sliderData;
 
-
-
 MAKE_AUTO_HOOK_MATCH(NoteController_Init, &NoteController::Init, void, NoteController *self, NoteData *noteData, float worldRotation, Vector3 moveStartPos, Vector3 moveEndPos, Vector3 jumpEndPos, float moveDuration, float jumpDuration, float jumpGravity, float endRotation, float uniformScale, bool rotateTowardsPlayer, bool useRandomRotation)
 {
     NoteController_Init(self, noteData, worldRotation, moveStartPos, moveEndPos, jumpEndPos, moveDuration, jumpDuration, jumpGravity, endRotation, uniformScale, rotateTowardsPlayer, useRandomRotation);
@@ -43,6 +41,7 @@ MAKE_AUTO_HOOK_MATCH(NoteController_Init, &NoteController::Init, void, NoteContr
         self->Dissolve(0.001f);
         self->NoteDidStartDissolving();
         self->SendNoteWasMissedEvent();
+        self->Pause(true);
         //self->DissolveCoroutine(0.001f);
         //self->get_gameObject()->SetActive(false);
         //Object::Destroy(self);
@@ -64,24 +63,22 @@ MAKE_AUTO_HOOK_MATCH(NoteController_Init, &NoteController::Init, void, NoteContr
 
 
 
-
-
 // Don't work sadge
-//MAKE_AUTO_HOOK_MATCH(SliderController_Init, &SliderController::Init, void, SliderController *self, SliderController::LengthType lengthType, SliderData *sliderData, float worldRotation, Vector3 headNoteJumpStartPos, Vector3 tailNoteJumpStartPos, Vector3 headNoteJumpEndPos, Vector3 tailNoteJumpEndPos, float jumpDuration, float startNoteJumpGravity, float endNoteJumpGravity, float noteUniformScale)
-//{
-//    SliderController_Init(self, lengthType, sliderData, worldRotation, headNoteJumpStartPos, tailNoteJumpStartPos, headNoteJumpEndPos, tailNoteJumpEndPos, jumpDuration, startNoteJumpGravity, endNoteJumpGravity, noteUniformScale);
-//    
-//    //self->get_gameObject()->SetActive(false);
-//
-//    if (self->sliderData->colorType == ColorType::ColorA && getModConfig().LeftSaberToggle.GetValue() && getModConfig().Enabled.GetValue())
-//    {
-//        getLogger().info("Disabling Left Arc");
-//    }
-//    else if (self->sliderData->colorType == ColorType::ColorB && getModConfig().RightSaberToggle.GetValue() && getModConfig().Enabled.GetValue())
-//    {
-//        getLogger().info("Disabling Right Arc");
-//    }
-//}
+MAKE_AUTO_HOOK_MATCH(SliderController_Init, &SliderController::Init, void, SliderController *self, SliderController::LengthType lengthType, SliderData *sliderData, float worldRotation, Vector3 headNoteJumpStartPos, Vector3 tailNoteJumpStartPos, Vector3 headNoteJumpEndPos, Vector3 tailNoteJumpEndPos, float jumpDuration, float startNoteJumpGravity, float endNoteJumpGravity, float noteUniformScale)
+{
+    SliderController_Init(self, lengthType, sliderData, worldRotation, headNoteJumpStartPos, tailNoteJumpStartPos, headNoteJumpEndPos, tailNoteJumpEndPos, jumpDuration, startNoteJumpGravity, endNoteJumpGravity, noteUniformScale);
+    
+    //self->get_gameObject()->SetActive(false);
+
+    if (self->sliderData->colorType == ColorType::ColorA && sliderData->sliderType == SliderData::Type::Burst && getModConfig().LeftSaberToggle.GetValue() && getModConfig().Enabled.GetValue())
+    {
+        getLogger().info("Disabling Left Arc");
+    }
+    else if (self->sliderData->colorType == ColorType::ColorB && sliderData->sliderType == SliderData::Type::Burst && getModConfig().RightSaberToggle.GetValue() && getModConfig().Enabled.GetValue())
+    {
+        getLogger().info("Disabling Right Arc");
+    }
+}
 
 
 
