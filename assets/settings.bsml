@@ -12,6 +12,7 @@
         <toggle-setting value="SeatedMode" text="Seated Mode" apply-on-change="true" />
 
         <horizontal spacing="0.5">
+            <button text="Reload Submission Check" on-click="RefreshScoreSub" preferred-width="45"/>
             <text text="Score Submission: " align="Center" hover-hint="Actually make it work later "/>
             <stack>
                 <text text="Enabled" color="green" align="Center" active="true" id="ScoreTextE"/>
