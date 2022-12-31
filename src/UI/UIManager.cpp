@@ -18,11 +18,7 @@ namespace AccessAbility::UI
             instance = UIManager::New_ctor();
         return instance.ptr();
     }
-
-    void UIManager::ctor()
-    {
-
-    }
+    void UIManager::ctor() { }
 
 
 
@@ -38,7 +34,6 @@ namespace AccessAbility::UI
             ScoreTextE->SetActive(false);
             ScoreTextD->SetActive(true);
         }
-        
     }
 
 
@@ -56,29 +51,30 @@ namespace AccessAbility::UI
 
     void UIManager::RefreshScoreSub()
     {
+        getModConfig().Save();
         ScoreSubmissionChecker();
     }
 
     
     void UIManager::PostParse()
     {
-        ScoringTextEnabled();
+        ScoreSubmissionChecker();
     }
 
     bool UIManager::get_ModToggle() { return getModConfig().ModToggle.GetValue(); }
-    void UIManager::set_ModToggle(bool value) { getModConfig().ModToggle.SetValue(value); }
+    void UIManager::set_ModToggle(bool value) { getModConfig().ModToggle.SetValue(value, false); }
 
     bool UIManager::get_LeftSaberToggle() { return getModConfig().LeftSaberToggle.GetValue(); }
-    void UIManager::set_LeftSaberToggle(bool value) { getModConfig().LeftSaberToggle.SetValue(value); }
+    void UIManager::set_LeftSaberToggle(bool value) { getModConfig().LeftSaberToggle.SetValue(value, false); }
 
     bool UIManager::get_RightSaberToggle() { return getModConfig().RightSaberToggle.GetValue(); }
-    void UIManager::set_RightSaberToggle(bool value) { getModConfig().RightSaberToggle.SetValue(value);}
+    void UIManager::set_RightSaberToggle(bool value) { getModConfig().RightSaberToggle.SetValue(value, false);}
 
     bool UIManager::get_YeetCrouchWalls() { return getModConfig().YeetCrouchWalls.GetValue(); }
-    void UIManager::set_YeetCrouchWalls(bool value) { getModConfig().YeetCrouchWalls.SetValue(value); }
+    void UIManager::set_YeetCrouchWalls(bool value) { getModConfig().YeetCrouchWalls.SetValue(value, false); }
 
     bool UIManager::get_YeetBombs() { return getModConfig().YeetBombs.GetValue(); }
-    void UIManager::set_YeetBombs(bool value) { getModConfig().YeetBombs.SetValue(value); }
+    void UIManager::set_YeetBombs(bool value) { getModConfig().YeetBombs.SetValue(value, false); }
 
     bool UIManager::get_SeatedMode() { return getModConfig().SeatedMode.GetValue(); }
     void UIManager::set_SeatedMode(bool value) { getModConfig().SeatedMode.SetValue(value); }

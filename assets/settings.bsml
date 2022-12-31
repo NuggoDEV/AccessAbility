@@ -4,8 +4,8 @@
     <vertical preferred-width="95" preferred-height="58">
         <toggle-setting value="ModToggle" text="Enable AccessAbility" apply-on-change="true" hover-hint="Enables/ Disables AccessAbility"/>
         <horizontal>
-            <toggle-setting value="LeftSaberToggle" text="Left Saber Toggle" apply-on-change="true"/>
-            <toggle-setting value="RightSaberToggle" text="Right Saber Toggle" apply-on-change="true"/>
+            <toggle-setting value="LeftSaberToggle" text="Disable Left Saber" apply-on-change="true" hover-hint="NOTE: ARCS ARE BROKEN AND WILL NOT DISABLE IN THIS BUILD!"/>
+            <toggle-setting value="RightSaberToggle" text="Disable Right Saber" apply-on-change="true" hover-hint="NOTE: ARCS ARE BROKEN AND WILL NOT DISABLE IN THIS BUILD!"/>
         </horizontal>
         <toggle-setting value="YeetCrouchWalls" text="Yeet Crouch Walls" apply-on-change="true" />
         <toggle-setting value="YeetBombs" text="Yeet Bombs" apply-on-change="true" />
@@ -13,7 +13,7 @@
 
         <horizontal spacing="0.5">
             <button text="Reload Submission Check" on-click="RefreshScoreSub" preferred-width="45"/>
-            <text text="Score Submission: " align="Center" hover-hint="Actually make it work later "/>
+            <text text="Score Submission: " align="Center"/>
             <stack>
                 <text text="Enabled" color="green" align="Center" active="true" id="ScoreTextE"/>
                 <text text="Disabled" color="red" align="Center" active="false" id="ScoreTextD"/>
