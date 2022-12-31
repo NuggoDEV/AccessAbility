@@ -14,7 +14,7 @@ MAKE_AUTO_HOOK_MATCH(BombNoteController_Init, &BombNoteController::Init, void, B
 {
     BombNoteController_Init(self, noteData, worldRotation, moveStartPos, moveEndPos, jumpEndPos, moveDuration, jumpDuration, jumpGravity);
 
-    if (getModConfig().Enabled.GetValue() && getModConfig().YeetBombs.GetValue())
+    if (getModConfig().ModToggle.GetValue() && getModConfig().YeetBombs.GetValue())
     {
         self->get_gameObject()->SetActive(false);
     }
