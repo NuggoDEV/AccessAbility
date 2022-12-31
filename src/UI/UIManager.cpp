@@ -52,7 +52,7 @@ namespace AccessAbility::UI
     {
         if (!getModConfig().ModToggle.GetValue())
             bs_utils::Submission::enable(ModInf());
-        else if (getModConfig().LeftSaberToggle.GetValue() or getModConfig().RightSaberToggle.GetValue() or getModConfig().YeetCrouchWalls.GetValue() or getModConfig().YeetBombs.GetValue())
+        else if (getModConfig().LeftSaberToggle.GetValue() || getModConfig().RightSaberToggle.GetValue() || getModConfig().YeetCrouchWalls.GetValue() || getModConfig().YeetBombs.GetValue())
             bs_utils::Submission::disable(ModInf());
         //else
             //bs_utils::Submission::disable(ModInf());
