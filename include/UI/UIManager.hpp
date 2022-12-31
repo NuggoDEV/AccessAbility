@@ -4,6 +4,7 @@
 #include "custom-types/shared/macros.hpp"
 #include "bsml/shared/macros.hpp"
 #include "bsml/shared/BSML/Components/TextGradientUpdater.hpp"
+#include "bsml/shared/BSML/Tags/ButtonTag.hpp"
 #include "bsml/shared/BSML/Tags/TextTag.hpp"
 
 #include "UnityEngine/Color.hpp"
@@ -18,10 +19,9 @@ DECLARE_CLASS_CODEGEN(AccessAbility::UI, UIManager, Il2CppObject,
 
     DECLARE_INSTANCE_METHOD(void, ScoringTextEnabled);
     DECLARE_INSTANCE_METHOD(void, ScoreSubmissionChecker);
-    //DECLARE_INSTANCE_METHOD(void, PostParse);
+    DECLARE_INSTANCE_METHOD(void, PostParse);
 
-    //DECLARE_INSTANCE_FIELD(TMPro::TextMeshProUGUI, ScoreText);
-    //DECLARE_INSTANCE_FIELD(TMPro::TextMeshProUGUI*, ScoreTextD);
+    DECLARE_INSTANCE_METHOD(void, RefreshScoreSub);
 
     DECLARE_INSTANCE_FIELD(UnityEngine::GameObject*, ScoreTextE);
     DECLARE_INSTANCE_FIELD(UnityEngine::GameObject*, ScoreTextD);
