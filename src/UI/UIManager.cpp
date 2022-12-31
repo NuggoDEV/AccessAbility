@@ -26,83 +26,62 @@ namespace AccessAbility::UI
 
 
 
-    void UIManager::ScoringTextEnabled(bool isEnabled)
+    void UIManager::ScoringTextEnabled()
     {
-        
-        
-    }
-
-    void UIManager::CheckScoreSub()
-    {
-        if (!bs_utils::Submission::getEnabled())
+        ScoreTextD->SetActive(false);
+        ScoreTextD->SetActive(true);
+        /*if (bs_utils::Submission::getEnabled())
         {
-            ScoreTextE->SetActive(false);
-            ScoreTextD->SetActive(true);
-        }
-        else
-        {
+            //ScoreText->SetText("Enabled!");
+            //ScoreText->set_color(UnityEngine::Color::get_green());
             ScoreTextE->SetActive(true);
             ScoreTextD->SetActive(false);
         }
-        //if (getModConfig().ModToggle.GetValue() and getModConfig().LeftSaberToggle.GetValue() or getModConfig().RightSaberToggle.GetValue() or getModConfig().YeetCrouchWalls.GetValue() or getModConfig().YeetBombs.GetValue())
-        //{
-        //    bs_utils::Submission::disable(ModInf());
-        //    ScoreTextE->SetActive(false);
-        //    ScoreTextD->SetActive(true);
-        //}
-        //else
-        //{
-        //    bs_utils::Submission::enable(ModInf());
-        //    ScoreTextE->SetActive(true);
-        //    ScoreTextD->SetActive(false);
-        //}
+        else
+        {
+            //ScoreText->SetText("Disabled!");
+            //ScoreText->set_color(UnityEngine::Color::get_red());
+            ScoreTextE->SetActive(false);
+            ScoreTextD->SetActive(true);
+        }*/
+        
     }
 
+
+    void UIManager::ScoreSubmissionChecker()
+    {
+        if (!getModConfig().ModToggle.GetValue())
+            bs_utils::Submission::enable(ModInf());
+        else if (getModConfig().LeftSaberToggle.GetValue() or getModConfig().RightSaberToggle.GetValue() or getModConfig().YeetCrouchWalls.GetValue() or getModConfig().YeetBombs.GetValue())
+            bs_utils::Submission::disable(ModInf());
+        //else
+            //bs_utils::Submission::disable(ModInf());
+
+        ScoringTextEnabled();
+    }
+
+    
+    //void UIManager::PostParse()
+    //{
+    //    ScoringTextEnabled();
+    //}
 
     bool UIManager::get_ModToggle() { return getModConfig().ModToggle.GetValue(); }
-    void UIManager::set_ModToggle(bool value) { getModConfig().ModToggle.SetValue(value); }
+    void UIManager::set_ModToggle(bool value) { getModConfig().ModToggle.SetValue(value); ScoringTextEnabled(); }
 
     bool UIManager::get_LeftSaberToggle() { return getModConfig().LeftSaberToggle.GetValue(); }
-    void UIManager::set_LeftSaberToggle(bool value) 
-    { 
-        getModConfig().LeftSaberToggle.SetValue(value); 
-        if (getModConfig().ModToggle.GetValue() && value)
-            bs_utils::Submission::disable(ModInf());
-        else
-            bs_utils::Submission::enable(ModInf());
-    }
+    void UIManager::set_LeftSaberToggle(bool value) { getModConfig().LeftSaberToggle.SetValue(value); ScoringTextEnabled(); }
 
     bool UIManager::get_RightSaberToggle() { return getModConfig().RightSaberToggle.GetValue(); }
-    void UIManager::set_RightSaberToggle(bool value) 
-    { 
-        getModConfig().RightSaberToggle.SetValue(value);
-        if (getModConfig().ModToggle.GetValue() && value)
-            bs_utils::Submission::disable(ModInf());
-        else
-            bs_utils::Submission::enable(ModInf());
-    }
+    void UIManager::set_RightSaberToggle(bool value) { getModConfig().RightSaberToggle.SetValue(value); ScoringTextEnabled(); }
 
     bool UIManager::get_YeetCrouchWalls() { return getModConfig().YeetCrouchWalls.GetValue(); }
-    void UIManager::set_YeetCrouchWalls(bool value) 
-    { 
-        getModConfig().YeetCrouchWalls.SetValue(value);
-        if (getModConfig().ModToggle.GetValue() && value)
-            bs_utils::Submission::disable(ModInf());
-        else
-            bs_utils::Submission::enable(ModInf());
-    }
+    void UIManager::set_YeetCrouchWalls(bool value) { getModConfig().YeetCrouchWalls.SetValue(value); ScoringTextEnabled(); }
 
     bool UIManager::get_YeetBombs() { return getModConfig().YeetBombs.GetValue(); }
-    void UIManager::set_YeetBombs(bool value) 
-    { 
-        getModConfig().YeetBombs.SetValue(value);
-        if (getModConfig().ModToggle.GetValue() && value)
-            bs_utils::Submission::disable(ModInf());
-        else
-            bs_utils::Submission::enable(ModInf());
-    }
+    void UIManager::set_YeetBombs(bool value) { getModConfig().YeetBombs.SetValue(value); ScoringTextEnabled(); }
 
     bool UIManager::get_SeatedMode() { return getModConfig().SeatedMode.GetValue(); }
-    void UIManager::set_SeatedMode(bool value) { getModConfig().SeatedMode.SetValue(value); }
+    void UIManager::set_SeatedMode(bool value) { getModConfig().SeatedMode.SetValue(value); ScoringTextEnabled(); }
 
 }

@@ -9,16 +9,24 @@
 #include "UnityEngine/Color.hpp"
 using namespace UnityEngine;
 
+#include "TMPro/TextMeshProUGUI.hpp"
+
 #define GET_FIND_METHOD(mPtr) il2cpp_utils::il2cpp_type_check::MetadataGetter<mPtr>::get()
 
 DECLARE_CLASS_CODEGEN(AccessAbility::UI, UIManager, Il2CppObject,
     DECLARE_INSTANCE_FIELD(HMUI::ViewController*, settingsViewController);
 
-    DECLARE_INSTANCE_METHOD(void, ScoringTextEnabled, bool isEnabled);
-    DECLARE_INSTANCE_METHOD(void, CheckScoreSub);
+    DECLARE_INSTANCE_METHOD(void, ScoringTextEnabled);
+    DECLARE_INSTANCE_METHOD(void, ScoreSubmissionChecker);
+    //DECLARE_INSTANCE_METHOD(void, PostParse);
+
+    //DECLARE_INSTANCE_FIELD(TMPro::TextMeshProUGUI, ScoreText);
+    //DECLARE_INSTANCE_FIELD(TMPro::TextMeshProUGUI*, ScoreTextD);
 
     DECLARE_INSTANCE_FIELD(UnityEngine::GameObject*, ScoreTextE);
     DECLARE_INSTANCE_FIELD(UnityEngine::GameObject*, ScoreTextD);
+
+    
 
     DECLARE_BSML_PROPERTY(bool, ModToggle);
     DECLARE_BSML_PROPERTY(bool, LeftSaberToggle);
