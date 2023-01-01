@@ -1,0 +1,25 @@
+<bg id='root' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='https://raw.githubusercontent.com/RedBrumbler/Quest-BSML-Docs/gh-pages/schema.xsd'>
+    <tab-selector tab-tag='tabs'/>
+
+    <vertical preferred-width="95" preferred-height="58">
+        <toggle-setting value="ModToggle" text="Enable AccessAbility" apply-on-change="true" hover-hint="Enables/ Disables AccessAbility"/>
+        <horizontal>
+            <toggle-setting value="LeftSaberToggle" text="Disable Left Saber" apply-on-change="true" hover-hint="NOTE: ARCS ARE BROKEN AND WILL NOT DISABLE IN THIS BUILD!
+    Make sure to press the 'Reload Submission Check' button to save the value!"/>
+            <toggle-setting value="RightSaberToggle" text="Disable Right Saber" apply-on-change="true" hover-hint="NOTE: ARCS ARE BROKEN AND WILL NOT DISABLE IN THIS BUILD!
+    Make sure to press the 'Reload Submission Check' button to save the value!"/>
+        </horizontal>
+        <toggle-setting value="YeetCrouchWalls" text="Yeet Crouch Walls" apply-on-change="true" hover-hint="Make sure to press the 'Reload Submission Check' button to save the value!" />
+        <toggle-setting value="YeetBombs" text="Yeet Bombs" apply-on-change="true" hover-hint="Make sure to press the 'Reload Submission Check' button to save the value!" />
+        <toggle-setting value="SeatedMode" text="Seated Mode" apply-on-change="true" hover-hint="Make sure to press the 'Reload Submission Check' button to save the value!" />
+
+        <horizontal spacing="0.5">
+            <button text="Reload Submission Check" on-click="RefreshScoreSub" preferred-width="45" hover-hint="This button will also save the config values!"/>
+            <text text="Score Submission: " align="Center"/>
+            <stack>
+                <text text="Enabled" color="green" align="Center" active="true" id="ScoreTextE"/>
+                <text text="Disabled" color="red" align="Center" active="false" id="ScoreTextD"/>
+            </stack>
+        </horizontal>
+    </vertical>
+</bg>
