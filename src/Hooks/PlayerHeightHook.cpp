@@ -42,5 +42,6 @@ MAKE_AUTO_HOOK_MATCH(LevelSelectionFlowCoordinator_DidActivate, &LevelSelectionF
     auto playerData = playerDataModal->playerData;
     auto playerSpecificSettings = playerData->playerSpecificSettings;
 
-    playerSpecificSettings->playerHeight = oldPlayerHeight;
+    if (getModConfig().SeatedMode.GetValue())
+        playerSpecificSettings->playerHeight = oldPlayerHeight;
 }
