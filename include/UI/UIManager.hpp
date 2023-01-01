@@ -23,7 +23,6 @@ DECLARE_CLASS_CODEGEN(AccessAbility::UI, UIManager, Il2CppObject,
     DECLARE_INSTANCE_METHOD(void, PostParse);
 
     DECLARE_INSTANCE_METHOD(void, RefreshScoreSub);
-    DECLARE_INSTANCE_METHOD(void, SeatedModeToggle);
 
     DECLARE_INSTANCE_FIELD(UnityEngine::GameObject*, ScoreTextE);
     DECLARE_INSTANCE_FIELD(UnityEngine::GameObject*, ScoreTextD);

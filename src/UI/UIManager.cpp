@@ -26,26 +26,6 @@ namespace AccessAbility::UI
     }
     void UIManager::ctor() { }
 
-    
-    void UIManager::SeatedModeToggle()
-    {
-        auto playerDataModal = UnityEngine::Object::FindObjectOfType<PlayerDataModel *>();
-        auto playerData = playerDataModal->playerData;
-        auto playerHeight = playerData->playerSpecificSettings;
-
-        if (playerHeight->get_automaticPlayerHeight())
-            playerHeight->automaticPlayerHeight = false;
-        
-        
-        if (getModConfig().SeatedMode.GetValue())
-        {
-            getModConfig().HeightPreSeatedMode.SetValue(playerHeight->playerHeight);
-
-            playerHeight->playerHeight = 1.3f;
-        }
-        else if (!getModConfig().SeatedMode.GetValue())
-            playerHeight->playerHeight = getModConfig().HeightPreSeatedMode.GetValue();
-    }
 
 
     void UIManager::ScoringTextEnabled()
@@ -103,6 +83,6 @@ namespace AccessAbility::UI
     void UIManager::set_YeetBombs(bool value) { getModConfig().YeetBombs.SetValue(value, false); }
 
     bool UIManager::get_SeatedMode() { return getModConfig().SeatedMode.GetValue(); }
-    void UIManager::set_SeatedMode(bool value) { getModConfig().SeatedMode.SetValue(value); SeatedModeToggle(); }
+    void UIManager::set_SeatedMode(bool value) { getModConfig().SeatedMode.SetValue(value); }
 
 }
