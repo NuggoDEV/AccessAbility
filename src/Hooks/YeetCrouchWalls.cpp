@@ -17,7 +17,7 @@ MAKE_AUTO_HOOK_MATCH(Crouch_ObstacleController_Init, &ObstacleController::Init, 
 {
     Crouch_ObstacleController_Init(self, obstacleData, worldRotation, startPos, midPos, endPos, move1Duration, move2Duration, singleLineWidth, height);
 
-    if (getModConfig().Enabled.GetValue() && getModConfig().YeetCrouchWalls.GetValue() && obstacleData->lineLayer != 0)
+    if (getModConfig().ModToggle.GetValue() && getModConfig().YeetCrouchWalls.GetValue() && obstacleData->lineLayer != 0)
     {
         self->get_gameObject()->SetActive(false);
     }
